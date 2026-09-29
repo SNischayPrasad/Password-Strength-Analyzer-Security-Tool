@@ -1,0 +1,8 @@
+# Web framework (serves the API and the static frontend)
+Flask>=3.0,<4.0
+# Loads settings from a local .env file (optional but convenient)
+python-dotenv>=1.0
+# Argon2id password hashing - used ONLY by the separate hashing demo in demos/
+argon2-cffi>=23.1
+# Test runner
+pytest>=8.0
