@@ -1,0 +1,104 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+@import url('https://fonts.googleapis.com/css2?family=Chivo:wght@700;800;900&family=Chivo+Mono:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap');
+@page { size: 1080px 1350px; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #111614; }
+.slide { width: 1080px; height: 1350px; position: relative; overflow: hidden; background: #111614;
+  color: #e8edea; font-family: 'Public Sans', sans-serif; padding: 84px 80px 120px; page-break-after: always;
+  display: flex; flex-direction: column; }
+.slide::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(#1b2320 1px, transparent 1px), linear-gradient(90deg, #1b2320 1px, transparent 1px);
+  background-size: 54px 54px; opacity: .55; }
+.slide > * { position: relative; }
+.eyebrow { font: 600 22px 'Chivo Mono', monospace; letter-spacing: .16em; text-transform: uppercase; color: #3fb8af; margin: 0 0 26px; }
+h1 { font: 900 88px/0.98 'Chivo', sans-serif; letter-spacing: -.035em; margin: 0 0 30px; }
+h2 { font: 900 66px/1.02 'Chivo', sans-serif; letter-spacing: -.03em; margin: 0 0 26px; }
+p.lead { font-size: 34px; line-height: 1.4; color: #c9d2cd; margin: 0 0 30px; }
+.accent { color: #3fb8af; }
+.weak { color: #ec835a; }
+.bad { color: #f07a72; }
+.mono { font-family: 'Chivo Mono', monospace; }
+.footer { position: absolute; left: 80px; right: 80px; bottom: 50px; display: flex; justify-content: space-between;
+  font: 600 20px 'Chivo Mono', monospace; color: #7f8b85; letter-spacing: .08em; }
+.shot { border-radius: 18px; border: 1px solid #2f3934; box-shadow: 0 30px 80px rgba(0,0,0,.55); display: block; max-width: 100%; }
+.big-pw { font: 600 118px 'Chivo Mono', monospace; letter-spacing: -.02em; margin: 30px 0 18px; }
+.chips { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+.chip { font: 600 26px 'Chivo Mono', monospace; padding: 10px 20px; border-radius: 999px; border: 2px solid #3a4540; color: #e8edea; }
+.chip::before { content: "\2713\00a0"; color: #4cc24c; }
+.verdict { display: flex; align-items: baseline; gap: 26px; margin-top: auto; }
+.verdict .score { font: 900 200px/0.9 'Chivo', sans-serif; letter-spacing: -.05em; color: #ec835a; }
+.verdict .label { font: 900 64px 'Chivo', sans-serif; color: #ec835a; }
+.verdict small { display: block; font: 600 30px 'Public Sans'; color: #a3afa9; }
+.swipe { font: 700 28px 'Public Sans'; color: #3fb8af; margin-top: 36px; }
+.list { display: grid; gap: 22px; margin-top: 10px; }
+.row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; padding: 24px 28px;
+  background: #19201d; border: 1px solid #2f3934; border-left: 8px solid var(--c); border-radius: 14px; }
+.row b { font: 800 34px 'Chivo', sans-serif; }
+.row span { font: 600 28px 'Chivo Mono', monospace; color: #c9d2cd; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin: 10px 0 40px; }
+.stat { background: #19201d; border: 1px solid #2f3934; border-radius: 18px; padding: 30px 32px; }
+.stat .n { font: 900 108px/1 'Chivo', sans-serif; letter-spacing: -.04em; }
+.stat .t { font: 700 28px 'Public Sans'; margin-top: 12px; }
+.stat .d { font-size: 24px; color: #a3afa9; margin-top: 8px; line-height: 1.35; }
+.bul { list-style: none; padding: 0; margin: 0 0 34px; display: grid; gap: 18px; }
+.bul li { font-size: 32px; line-height: 1.35; padding-left: 50px; position: relative; }
+.bul li::before { content: "\2713"; position: absolute; left: 0; top: 0; color: #3fb8af; font-weight: 800; }
+.rules { display: grid; gap: 26px; margin-top: 20px; }
+.rule { display: grid; grid-template-columns: 110px 1fr; align-items: center; background: #19201d; border: 1px solid #2f3934; border-radius: 18px; padding: 30px; }
+.rule .k { font: 900 72px 'Chivo', sans-serif; color: #3fb8af; }
+.rule b { font: 800 40px 'Chivo', sans-serif; display: block; }
+.rule span { font-size: 27px; color: #a3afa9; }
+.cta { margin-top: auto; font: 800 38px 'Chivo', sans-serif; }
+.cta small { display: block; font: 600 26px 'Public Sans'; color: #a3afa9; margin-top: 10px; }
+</style></head><body><section class="slide">
+      <p class="eyebrow">Cybersecurity project</p>
+      <h1>This password follows every rule.</h1>
+      <div class="big-pw">Password123!</div>
+      <div class="chips"><span class="chip">Uppercase</span><span class="chip">Lowercase</span><span class="chip">Number</span><span class="chip">Symbol</span><span class="chip">12 characters</span></div>
+      <div class="verdict"><div class="score">38</div><div><div class="label">WEAK</div><small>out of 100 in my analyzer</small></div></div>
+      <p class="swipe">Here's why → swipe</p><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>01 / 08</span></div></section><section class="slide">
+      <p class="eyebrow">What I built</p>
+      <h2>An analyzer that thinks like an <span class="accent">attacker</span>, not a checklist.</h2>
+      <p class="lead">Each character becomes a tile, coloured by the pattern it belongs to.</p>
+      <img class="shot" src="assets/pw123_panel.png" style="width:760px;height:760px;object-fit:cover;object-position:top;align-self:center"><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>02 / 08</span></div></section><section class="slide">
+      <p class="eyebrow">How attackers really guess</p>
+      <h2>They don't guess randomly. They try <span class="accent">patterns</span> first.</h2>
+      <div class="list"><div class="row" style="--c:#e34948"><b>Common passwords</b><span>123456</span></div><div class="row" style="--c:#eb6834"><b>Keyboard walks</b><span>qwerty · asdf</span></div><div class="row" style="--c:#2a78d6"><b>Sequences</b><span>1234 · abcd</span></div><div class="row" style="--c:#1baf7a"><b>Repetition</b><span>aaaa · abcabc</span></div><div class="row" style="--c:#9085e9"><b>Word + number / year</b><span>Welcome2026!</span></div><div class="row" style="--c:#e87ba4"><b>Personal details</b><span>Name@1999</span></div></div>
+      <p class="lead" style="margin-top:34px;font-size:30px">My tool detects all six (plus leetspeak like p@ssw0rd) and explains each one.</p><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>03 / 08</span></div></section><section class="slide">
+      <p class="eyebrow">The entropy trap</p>
+      <h2>The textbook formula says it's strong. <span class="bad">It isn't.</span></h2>
+      <div class="compare">
+        <div class="stat"><div class="n">78.8</div><div class="t">bits: L × log₂(N)</div><div class="d">Assumes every character was picked at random.</div></div>
+        <div class="stat"><div class="n weak">23.0</div><div class="t">bits: pattern-adjusted</div><div class="d">Re-prices "Password", "123" and "!" at what they cost an attacker.</div></div>
+      </div>
+      <img class="shot" src="assets/pw123_findings.png" style="width:780px;align-self:center"><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>04 / 08</span></div></section><section class="slide">
+      <p class="eyebrow">What actually works</p>
+      <h2>Length + <span class="accent">real randomness</span> wins.</h2>
+      <p class="lead">A 20-character password from the built-in generator (Python <span class="mono">secrets</span>, a CSPRNG) scores 98/100 with zero patterns.</p>
+      <img class="shot" src="assets/strong_readout.png" style="width:900px;align-self:center;margin-bottom:24px">
+      <img class="shot" src="assets/strong_map.png" style="width:900px;align-self:center"><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>05 / 08</span></div></section><section class="slide">
+      <p class="eyebrow">Privacy by design</p>
+      <h2>A password tool must never become a password <span class="bad">leak</span>.</h2>
+      <ul class="bul">
+        <li>Analyzed in memory: never stored, logged or sent to third parties</li>
+        <li>No password column in the database, not even a hash</li>
+        <li>Never in URLs, browser storage, API responses or error messages</li>
+        <li>73 automated tests, including ones that scan the raw database file and logs</li>
+      </ul>
+      <div class="compare">
+        <div class="stat"><div class="n accent">73/73</div><div class="t">automated tests passing</div><div class="d">Including 12 dedicated privacy &amp; security tests.</div></div>
+        <div class="stat"><div class="n accent">0</div><div class="t">password columns</div><div class="d">Only score, class, length and weakness types, and only on opt-in.</div></div>
+      </div><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>06 / 08</span></div></section><section class="slide">
+      <p class="eyebrow">Aggregate insights, zero passwords</p>
+      <h2>A dashboard that only sees <span class="accent">metadata</span>.</h2>
+      <p class="lead" style="font-size:30px">Score, class, length and weakness types, recorded only when a user opts in. (Synthetic demo data shown.)</p>
+      <img class="shot" src="assets/dash_strength.png" style="width:900px;height:390px;object-fit:contain;background:transparent;border:none;box-shadow:none;align-self:center;margin-bottom:22px">
+      <img class="shot" src="assets/dash_weakness.png" style="width:900px;height:390px;object-fit:contain;background:transparent;border:none;box-shadow:none;align-self:center"><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>07 / 08</span></div></section><section class="slide">
+      <p class="eyebrow">Your takeaway</p>
+      <h2>Three habits beat any clever password trick.</h2>
+      <div class="rules">
+        <div class="rule"><div class="k">1</div><div><b>Unique password per account</b><span>Reuse is how credential stuffing works.</span></div></div>
+        <div class="rule"><div class="k">2</div><div><b>Use a password manager</b><span>Let it generate long, random passwords for you.</span></div></div>
+        <div class="rule"><div class="k">3</div><div><b>Turn on MFA</b><span>A strong password doesn't stop phishing. A second factor does.</span></div></div>
+      </div>
+      <div class="cta">Built with Python · Flask · JavaScript · SQLite<small>Full source code on GitHub. Link in bio / comments.</small></div><div class="footer"><span>PASSWORD STRENGTH ANALYZER</span><span>08 / 08</span></div></section></body></html>
