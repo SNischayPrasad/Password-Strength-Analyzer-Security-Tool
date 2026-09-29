@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Analytics Dashboard</title>
+  <meta name="description" content="Aggregate, password-free statistics from analyses users chose to record.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@700;800;900&family=Chivo+Mono:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/"><span>Password Strength Analyzer</span><span class="brand-mark">LOCAL · PRIVATE</span></a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="/">Analyzer</a>
+    <a href="/#generator">Generator</a>
+    <a href="/learn">Learn</a>
+    <a href="/dashboard" aria-current="page">Dashboard</a>
+  </nav>
+</header>
+
+<main id="content">
+  <section class="thesis">
+    <p class="eyebrow">Aggregate metadata only</p>
+    <h1>Dashboard</h1>
+    <p>Counts from analyses someone chose to record. The database has no password column: only score, class, length, unique-character ratio, weakness types and time.</p>
+    <p class="hint"><button type="button" id="refresh">Refresh</button> <span id="updated" class="status-text"></span></p>
+  </section>
+
+  <div class="tiles" id="tiles">
+    <div class="tile"><div class="label">Total analyses</div><div class="value" id="t-total">—</div></div>
+    <div class="tile"><div class="label">Average score</div><div class="value" id="t-average">—</div></div>
+    <div class="tile"><div class="label"><i data-class="VERY WEAK"></i>Very weak</div><div class="value" data-count="VERY WEAK">—</div></div>
+    <div class="tile"><div class="label"><i data-class="WEAK"></i>Weak</div><div class="value" data-count="WEAK">—</div></div>
+    <div class="tile"><div class="label"><i data-class="MODERATE"></i>Moderate</div><div class="value" data-count="MODERATE">—</div></div>
+    <div class="tile"><div class="label"><i data-class="STRONG"></i>Strong</div><div class="value" data-count="STRONG">—</div></div>
+    <div class="tile"><div class="label"><i data-class="VERY STRONG"></i>Very strong</div><div class="value" data-count="VERY STRONG">—</div></div>
+  </div>
+
+  <p class="chart-fallback" id="empty-note" hidden>No recorded analyses yet. Use “Add result to anonymous stats” on the analyzer, or run <code>python scripts/seed_demo_data.py</code> to load synthetic demo data.</p>
+
+  <div class="charts">
+    <section class="panel chart-panel" aria-labelledby="c1-title">
+      <h2 id="c1-title">Strength distribution</h2>
+      <div class="chart-box"><canvas id="chart-strength" role="img" aria-label="Analyses per strength classification"></canvas></div>
+      <details><summary>View as table</summary><table class="data" id="table-strength"></table></details>
+    </section>
+    <section class="panel chart-panel" aria-labelledby="c2-title">
+      <h2 id="c2-title">Score distribution</h2>
+      <div class="chart-box"><canvas id="chart-score" role="img" aria-label="Analyses per score range"></canvas></div>
+      <details><summary>View as table</summary><table class="data" id="table-score"></table></details>
+    </section>
+    <section class="panel chart-panel" aria-labelledby="c3-title">
+      <h2 id="c3-title">Most common weakness types</h2>
+      <div class="chart-box"><canvas id="chart-weakness" role="img" aria-label="Share of analyses showing each weakness type"></canvas></div>
+      <details><summary>View as table</summary><table class="data" id="table-weakness"></table></details>
+    </section>
+    <section class="panel chart-panel" aria-labelledby="c4-title">
+      <h2 id="c4-title">Password length distribution</h2>
+      <div class="chart-box"><canvas id="chart-length" role="img" aria-label="Analyses per length range"></canvas></div>
+      <details><summary>View as table</summary><table class="data" id="table-length"></table></details>
+    </section>
+    <section class="panel chart-panel" aria-labelledby="c5-title">
+      <h2 id="c5-title">Patterns detected per analysis</h2>
+      <div class="chart-box"><canvas id="chart-patterns" role="img" aria-label="Analyses by number of weaknesses detected"></canvas></div>
+      <details><summary>View as table</summary><table class="data" id="table-patterns"></table></details>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  The dashboard never shows or stores actual passwords. Charts use Chart.js from jsDelivr; if it can't load, the tables still work.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+</body>
+</html>
