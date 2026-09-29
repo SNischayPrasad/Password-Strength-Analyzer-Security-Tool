@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Password Strength Analyzer</title>
+  <meta name="description" content="Privacy-focused password strength analyzer: length, predictability, common-password checks, pattern analysis and specific security suggestions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@700;800;900&family=Chivo+Mono:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#analyzer">Skip to the analyzer</a>
+
+<header class="site-header">
+  <a class="brand" href="/"><span>Password Strength Analyzer</span><span class="brand-mark">LOCAL · PRIVATE</span></a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="/" aria-current="page">Analyzer</a>
+    <a href="/#generator">Generator</a>
+    <a href="/learn">Learn</a>
+    <a href="/dashboard">Dashboard</a>
+  </nav>
+</header>
+
+<main>
+  <section class="thesis">
+    <h1>Length + unpredictability <span class="formula">beats</span> a symbol on the end.</h1>
+    <p>“Password123!” ticks every composition rule and is still one of the first guesses an attacker tries.
+      Type a password to see where it is predictable — sequences, keyboard walks, repeats, dictionary words and dates — and what to change.</p>
+    <div class="privacy-strip" aria-label="Privacy guarantees">
+      <span>Analyzed in memory</span><span>Never stored or logged</span><span>Never sent to third parties</span><span>Use demo passwords for screenshots</span>
+    </div>
+  </section>
+
+  <div class="bench" id="analyzer">
+    <!-- LEFT: input + readout -->
+    <div>
+      <section class="panel" aria-labelledby="analyze-heading">
+        <p class="eyebrow">Analyzer</p>
+        <h2 id="analyze-heading" class="visually-hidden">Analyze a password</h2>
+        <label class="field-label" for="password">Password</label>
+        <div class="password-row">
+          <input id="password" type="password" autocomplete="new-password" autocapitalize="off"
+                 autocorrect="off" spellcheck="false" maxlength="256" placeholder="Type a demo password"
+                 aria-describedby="password-hint">
+          <button type="button" id="toggle-visibility" class="toggle-eye" aria-pressed="false"
+                  aria-controls="password">👁 Show password</button>
+          <button type="button" id="clear-password">Clear</button>
+        </div>
+        <p class="hint" id="password-hint">Results update as you type. Hidden by default so people nearby can't read it.</p>
+
+        <details class="context">
+          <summary>Optional: check against personal details (demo values only)</summary>
+          <p class="hint">Compared in memory for this analysis only — never stored. Enter made-up values, not your real details.</p>
+          <div class="context-grid">
+            <label>First name<input id="ctx-first-name" type="text" autocomplete="off" maxlength="100" placeholder="e.g. Rahul"></label>
+            <label>Birth year<input id="ctx-birth-year" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="e.g. 1999"></label>
+            <label>Company / college<input id="ctx-organization" type="text" autocomplete="off" maxlength="100" placeholder="e.g. Example Institute"></label>
+          </div>
+        </details>
+
+        <div class="readout" id="readout" aria-live="polite">
+          <div class="readout-top">
+            <span class="classification" id="classification">—</span>
+            <span class="score"><strong id="score">0</strong>/100</span>
+          </div>
+          <div class="meter" role="meter" aria-label="Strength score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter">
+            <span class="meter-band"></span><span class="meter-band"></span><span class="meter-band"></span><span class="meter-band"></span><span class="meter-band"></span>
+            <span class="meter-fill" id="meter-fill"></span>
+          </div>
+          <div class="meter-scale" aria-hidden="true"><span>Very weak</span><span>Weak</span><span>Moderate</span><span>Strong</span><span>Very strong</span></div>
+        </div>
+
+        <div class="pattern-map">
+          <p class="eyebrow">Pattern map · where the predictability is</p>
+          <div class="cells" id="cells"><span class="cells-empty">Each character appears here as a tile. Tiles are underlined by the pattern they belong to.</span></div>
+          <div class="legend" id="legend"></div>
+        </div>
+
+        <ul class="checks" id="checks"></ul>
+
+        <div class="record-row">
+          <button type="button" id="record-button" disabled>Add result to anonymous stats</button>
+          <span class="status-text" id="record-status">Saves score, class and length only — never the password.</span>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="suggestions-heading">
+        <h2 id="suggestions-heading">Suggestions</h2>
+        <ol class="suggestions" id="suggestions"><li class="empty-state">Suggestions appear once you start typing.</li></ol>
+      </section>
+    </div>
+
+    <!-- RIGHT: findings + metrics -->
+    <div>
+      <section class="panel" aria-labelledby="findings-heading">
+        <h2 id="findings-heading">Findings</h2>
+        <ul class="findings" id="findings"><li class="empty-state">No password analyzed yet.</li></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="metrics-heading">
+        <h2 id="metrics-heading">Measurements</h2>
+        <dl class="metric-grid" id="metrics">
+          <div class="metric"><dt>Length</dt><dd id="m-length">—</dd></div>
+          <div class="metric"><dt>Character types</dt><dd id="m-types">—</dd></div>
+          <div class="metric"><dt>Unique characters</dt><dd id="m-unique">—</dd></div>
+          <div class="metric"><dt>Character pool (N)</dt><dd id="m-pool">—</dd></div>
+          <div class="metric"><dt>Theoretical entropy (L × log₂N)</dt><dd id="m-theoretical">—</dd></div>
+          <div class="metric"><dt>Pattern-adjusted estimate</dt><dd id="m-adjusted">—</dd></div>
+        </dl>
+        <p class="hint">Theoretical entropy assumes every character was picked at random. People rarely do that, so the pattern-adjusted estimate re-prices each detected pattern at roughly what it costs an attacker. <a href="/learn#entropy">How entropy works</a></p>
+
+        <h3 class="mt">Guess resistance</h3>
+        <p class="disclaimer" id="guess-disclaimer">Educational estimate only.</p>
+        <table class="data" id="guess-table">
+          <thead><tr><th scope="col">Scenario (illustrative)</th><th scope="col" class="num">Average time</th></tr></thead>
+          <tbody><tr><td colspan="2" class="empty-state">—</td></tr></tbody>
+        </table>
+
+        <details class="mt">
+          <summary><strong>How this score was calculated</strong></summary>
+          <table class="data" id="breakdown-table"><tbody><tr><td class="empty-state">—</td></tr></tbody></table>
+          <p class="hint">Project-defined weights and bands for education — not a universal standard.</p>
+        </details>
+      </section>
+
+      <section class="panel" aria-labelledby="policy-heading">
+        <p class="eyebrow">Separate from strength</p>
+        <h2 id="policy-heading">Policy check</h2>
+        <p class="policy-status" id="policy-status">—</p>
+        <ul class="policy-rules" id="policy-rules"></ul>
+        <p class="hint">Policy compliance asks “does it meet the organization's minimum rules?” Strength asks “how hard is it to guess?” A password can pass one and fail the other.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- GENERATOR -->
+  <section class="generator" id="generator" aria-labelledby="generator-heading">
+    <p class="eyebrow">Generator · Python <code>secrets</code> (CSPRNG)</p>
+    <h2 id="generator-heading" class="section-title">Let a machine choose</h2>
+    <div class="gen-grid">
+      <div class="panel">
+        <h3>Random password</h3>
+        <div class="options">
+          <label>Length
+            <select id="gen-length"><option>16</option><option selected>20</option><option>24</option></select>
+          </label>
+          <label><input type="checkbox" id="gen-upper" checked> Uppercase</label>
+          <label><input type="checkbox" id="gen-lower" checked> Lowercase</label>
+          <label><input type="checkbox" id="gen-digits" checked> Numbers</label>
+          <label><input type="checkbox" id="gen-symbols" checked> Symbols</label>
+        </div>
+        <button type="button" class="primary" id="gen-password-button">Generate password</button>
+        <output class="gen-output" id="gen-password-output" aria-live="polite"></output>
+        <div class="gen-actions">
+          <button type="button" id="gen-copy" disabled>Copy</button>
+          <button type="button" id="gen-analyze" disabled>Check this password</button>
+        </div>
+        <p class="hint" id="gen-password-meta">Generated on the server with a cryptographically secure random source and never stored. Save it straight into a password manager.</p>
+      </div>
+      <div class="panel">
+        <h3>Example passphrase</h3>
+        <div class="options">
+          <label>Words
+            <select id="gen-words"><option>4</option><option>5</option><option selected>6</option><option>7</option><option>8</option></select>
+          </label>
+          <label>Separator
+            <select id="gen-separator"><option value="-" selected>hyphen</option><option value=" ">space</option><option value=".">dot</option></select>
+          </label>
+        </div>
+        <button type="button" class="primary" id="gen-passphrase-button">Generate example passphrase</button>
+        <div class="mt"><span class="example-tag">Example only — do not reuse</span>
+          <output class="gen-output" id="gen-passphrase-output" aria-live="polite"></output></div>
+        <p class="hint" id="gen-passphrase-meta">Words are drawn at random, so the phrase has no meaning an attacker can predict. Any phrase shown on a screen or in a screenshot should be treated as used.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  Educational, defensive tool. Scores are project-defined estimates — no formula can perfectly measure password strength. Use strong, unique passwords, a password manager and MFA.
+</footer>
+
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/analyzer.js"></script>
+<script src="/assets/js/generator.js"></script>
+</body>
+</html>

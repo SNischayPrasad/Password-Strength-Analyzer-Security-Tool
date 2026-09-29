@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Password Security Guide</title>
+  <meta name="description" content="Password security education: passphrases, entropy, hashing, policies, MFA and the 10 password security rules.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@700;800;900&family=Chivo+Mono:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/"><span>Password Strength Analyzer</span><span class="brand-mark">LOCAL · PRIVATE</span></a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="/">Analyzer</a>
+    <a href="/#generator">Generator</a>
+    <a href="/learn" aria-current="page">Learn</a>
+    <a href="/dashboard">Dashboard</a>
+  </nav>
+</header>
+
+<main id="content">
+  <section class="thesis">
+    <p class="eyebrow">Password hygiene</p>
+    <h1>What makes a password hard to guess</h1>
+    <p>Attackers don't guess at random. They start with leaked-password lists, dictionary words, keyboard walks and personal details, then apply predictable tweaks. A strong password is one those shortcuts can't reach.</p>
+  </section>
+
+  <article class="prose">
+    <h2 id="passphrase">Password vs passphrase</h2>
+    <div class="compare">
+      <div class="panel">
+        <h3>Random password</h3>
+        <p>Characters picked by a generator from a large set: letters, digits and symbols.</p>
+        <p class="small muted">Best stored in a password manager. Hard to remember, very hard to guess.</p>
+      </div>
+      <div class="panel">
+        <h3>Random passphrase</h3>
+        <p>Several words picked <em>at random</em> by a generator, joined with a separator.</p>
+        <p class="small muted">Long, and easier to remember and type. Strong only when the words are random.</p>
+      </div>
+    </div>
+    <p>Two fictional examples, labelled so nobody reuses them:</p>
+    <div class="panel">
+      <span class="example-tag">Example only — do not reuse</span>
+      <p class="formula-box">walrus-trellis-cobalt-thimble-quarry-nectar</p>
+      <span class="example-tag">Example only — do not reuse</span>
+      <p class="formula-box">lagoon.sprocket.hazel.tundra.mosaic</p>
+    </div>
+    <p>A passphrase is <strong>not</strong> a quote, song lyric, proverb or famous phrase. Attackers keep lists of those too. Even phrases published as examples of good passphrases end up on guessing lists. Use the generator on the analyzer page and treat anything shown on a screen as already used.</p>
+    <p>Each random word from a list of <code>W</code> words adds <code>log₂(W)</code> bits. This project's demo list has about 500 words (≈9 bits per word). The EFF Large Wordlist has 7,776 words (≈12.9 bits per word), so six words from it give ≈77 bits.</p>
+
+    <h2 id="entropy">Entropy, and where it misleads</h2>
+    <p>Entropy measures how many guesses a password would take <em>if it were chosen at random</em>. A simple theoretical estimate:</p>
+    <p class="formula-box">Entropy ≈ L × log₂(N)</p>
+    <ul>
+      <li><strong>L</strong> is the password length.</li>
+      <li><strong>N</strong> is the size of the character pool: 26 lowercase, +26 uppercase, +10 digits, +33 symbols.</li>
+    </ul>
+    <p>For <code>Password123!</code>: L = 12 and N = 95, so the formula gives about 79 bits, which sounds excellent. But the formula assumes every character was random. This one is a dictionary word, a capital letter at the start, the sequence “123” and a “!” on the end. That is exactly what guessing tools try first.</p>
+    <p>That's why the analyzer shows two numbers. The <strong>theoretical</strong> estimate uses the formula above. The <strong>pattern-adjusted</strong> estimate re-prices each detected pattern at roughly what it costs an attacker who knows the trick. A dictionary word costs about log₂(dictionary size) bits, not 8 × 6.6 bits. Both numbers are estimates. No single formula can measure password strength perfectly.</p>
+
+    <h3>Why guess-time estimates are only educational</h3>
+    <p>How long a password survives depends on:</p>
+    <ul>
+      <li><strong>The attacker model:</strong> a targeted attacker who knows your name, or a bulk attacker.</li>
+      <li><strong>Predictability:</strong> patterns shrink the effective search space.</li>
+      <li><strong>Hashing algorithm and work factor:</strong> Argon2id/bcrypt versus a fast hash.</li>
+      <li><strong>Rate limiting and lockout:</strong> these apply to online guessing only.</li>
+      <li><strong>Online or offline:</strong> guessing against a login form, or against a stolen hash database.</li>
+    </ul>
+    <p>The analyzer shows several illustrative scenarios side by side to make that point. It does not claim an exact “time to crack”.</p>
+
+    <h2 id="rules">10 password security rules</h2>
+    <ol class="rules">
+      <li><div><strong>Use unique passwords.</strong> One password per account, so a breach at one site doesn't unlock the others.</div></li>
+      <li><div><strong>Prefer long passwords or passphrases.</strong> Length multiplies the search space. Aim for 16+ characters, or 5–6 random words.</div></li>
+      <li><div><strong>Avoid predictable information.</strong> Names, birth years, pets, teams, companies and colleges are tried first in targeted attacks.</div></li>
+      <li><div><strong>Avoid common passwords.</strong> Anything on a “most common passwords” list, or a small tweak of one, falls within seconds.</div></li>
+      <li><div><strong>Never reuse passwords.</strong> Credential stuffing replays leaked username/password pairs on other sites automatically.</div></li>
+      <li><div><strong>Use a password manager.</strong> It generates and remembers unique, random passwords, so you only memorize one strong passphrase.</div></li>
+      <li><div><strong>Enable MFA.</strong> A second factor stops most account takeovers even when the password leaks. Passkeys and security keys also resist phishing.</div></li>
+      <li><div><strong>Never share passwords.</strong> Not over chat, email or phone. Legitimate IT and support staff never need your password.</div></li>
+      <li><div><strong>Watch for phishing.</strong> A perfect password typed into a fake login page is a stolen password. Check the domain before signing in.</div></li>
+      <li><div><strong>Change a password when compromise is suspected or confirmed.</strong> Arbitrary periodic changes tend to produce predictable variants like Summer2025! → Summer2026!.</div></li>
+    </ol>
+
+    <h2 id="composition">Why composition rules aren't enough</h2>
+    <p>“Must contain an uppercase letter, a number and a symbol” trains people into one layout: <em>Capitalized word + digits + symbol</em>. Guessing tools know that layout. Modern guidance, such as NIST SP 800-63B, puts length first, allows long passwords and spaces, and blocks known-common passwords. It does not require arbitrary character mixes.</p>
+
+    <h2 id="policy">Policy compliance vs strength</h2>
+    <p>A <strong>policy</strong> is an organization's pass/fail minimum, for example: at least 12 characters, not a common password, no personal information. <strong>Strength</strong> is an estimate of guessing resistance. “Welcome2026!” may pass an old policy and still be weak. A strong passphrase with spaces may fail a policy that forbids spaces. The analyzer reports the two separately.</p>
+
+    <h2 id="hashing">How sites should store passwords</h2>
+    <p>A well-built login system never stores your password. It stores a <strong>password hash</strong>:</p>
+    <p class="formula-box">password + unique random salt → slow password-hashing function → stored hash</p>
+    <ul>
+      <li><strong>Hashing is one-way.</strong> The system verifies a login by hashing the typed password with the same salt and comparing. It never needs to “decrypt” anything.</li>
+      <li><strong>Encryption is two-way.</strong> Anyone with the key can reverse it, so it's the wrong tool for password storage.</li>
+      <li><strong>A salt</strong> makes identical passwords produce different hashes and defeats precomputed tables.</li>
+      <li><strong>Slow, memory-hard functions</strong> (Argon2id, scrypt, bcrypt, or PBKDF2 with a high iteration count) make each offline guess expensive. Fast hashes like plain SHA-256 or MD5 are built for speed, which helps attackers here.</li>
+    </ul>
+    <p>See <code>demos/hashing_demo.py</code> in the repository for a runnable Argon2id example that uses a synthetic password only.</p>
+
+    <h2 id="beyond">Authentication is more than a password</h2>
+    <p>A very strong password still fails against phishing, malware, session theft or a breached site that stored it badly. Real login security is layered:</p>
+    <ul class="layers">
+      <li>Strong unique password</li><li>MFA / passkeys</li><li>Rate limiting</li><li>Secure password hashing</li>
+      <li>Account lockout &amp; abuse protection</li><li>Session security</li><li>Phishing protection</li><li>Monitoring &amp; alerting</li>
+    </ul>
+  </article>
+</main>
+
+<footer class="site-footer">
+  Educational, defensive tool. No passwords are stored, logged or sent to third parties.
+</footer>
+</body>
+</html>
